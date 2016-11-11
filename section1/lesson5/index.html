@@ -1,0 +1,109 @@
+<!DOCTYPE html >
+<html lang="en" ng-app="minmax" >
+<head >
+	<title >Form Validation - Part 1</title >
+	<link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" >
+	<link href="main.css" rel="stylesheet" >
+</head >
+
+<body >
+<nav class="navbar navbar-inverse navbar-fixed-top" >
+	<div class="container" >
+		<div class="navbar-header" >
+			<a class="navbar-brand"
+			   href="/" >Form Validation - Part 1
+			</a >
+		</div >
+	</div >
+</nav >
+
+<div class="container main-content" ng-controller="MinMaxCtrl" >
+
+	<form name="theForm"
+		  novalidate="novalidate"
+		  ng-submit="onSubmit(theForm.$valid)" >
+		<div class="form-group" ng-class="{'has-error': !theForm.name.$valid && (!theForm.name.$pristine || theForm.$submitted)}">
+			<label for="name" >Name</label >
+			<input type="text"
+			       class="form-control"
+			       ng-model="formModel.name"
+				   name="name"
+				   required="required"
+			       id="name" >
+			<div class="help-block" ng-show="!theForm.name.$valid && (theForm.name.$pristine && theForm.$submitted)">The name is required</div>
+			<div class="help-block" ng-show="!theForm.name.$valid && !theForm.name.$pristine">The name is not valid</div>
+			<pre> valid ? {{theForm.name.$valid}}</pre>
+			<pre>pristine ? {{ theForm.name.$pristine }}</pre>
+			<pre>submitted ? {{ theForm.$submitted }}</pre>
+		</div >
+
+		<div class="form-group"
+			 ng-class="{'has-error': !theForm.email.$valid && (!theForm.email.$pristine || theForm.$submitted),'has-success' :!(!theForm.email.$valid && (!theForm.email.$pristine || theForm.$submitted)) && !theForm.email.$pristine }">
+			<label for="email" >Email</label >
+			<input type="email"
+			       class="form-control"
+			       ng-model="formModel.email"
+			       id="email"
+				   required="required"
+			       name="email">
+			<div class="help-block" ng-show="!theForm.email.$valid && (theForm.email.$pristine && theForm.$submitted)">The email is required</div>
+			<div class="help-block" ng-show="!theForm.email.$valid && !theForm.email.$pristine">The email is not valid</div>
+
+		</div >
+
+		<div class="form-group" >
+			<label for="username" >Username</label >
+			<input type="text"
+			       class="form-control"
+			       ng-model="formModel.username"
+			       id="username" >
+		</div >
+
+		<div class="form-group" >
+			<label for="age" >Age</label >
+			<input type="number"
+			       class="form-control"
+			       ng-model="formModel.age"
+			       id="age" >
+		</div >
+
+		<div class="form-group" >
+			<label for="sex" >Sex</label >
+			<select name="sex"
+			        id="sex"
+			        class="form-control"
+			        ng-model="formModel.sex" >
+				<option value="" >Please Choose</option >
+				<option value="male" >Male</option >
+				<option value="female" >Female</option >
+			</select >
+		</div >
+
+		<div class="form-group" >
+			<label for="password" >Password</label >
+			<input type="password"
+			       class="form-control"
+			       ng-model="formModel.password"
+			       id="password" >
+		</div >
+
+		<div class="form-group" >
+			<button class="btn btn-primary"
+			        type="submit" >Register
+			</button >
+		</div >
+
+	</form >
+
+	<pre>{{ theForm | json }}</pre>
+
+
+</div >
+
+
+<script src="../libs/angular/angular.min.js" ></script >
+<script src="main.js" ></script >
+
+
+</body >
+</html >
