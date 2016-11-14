@@ -1,4 +1,4 @@
-var app = angular.module('codecraft', ['ngResource', 'infinite-scroll']);
+var app = angular.module('codecraft', ['ngResource', 'infinite-scroll', 'angularSpinner']);
 
 
 
@@ -95,7 +95,7 @@ app.service('ContactService', function (Contact) {
 				};
 
 				Contact.get(params, function (data) {
-					console.log(data);
+					console.log(" data: ${data}");
 					angular.forEach(data.results, function (person) {
 						self.persons.push(new Contact(person));
 					});
