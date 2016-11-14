@@ -18,13 +18,25 @@ app.controller('PersonListController', function ($scope, ContactService) {
 		$scope.contacts.loadMore();
 	}
 
-	$scope.sensitiveSearch = function (person) {
-		if ($scope.search) {
-			return person.name.indexOf($scope.search) == 0 ||
-				person.email.indexOf($scope.search) == 0;
-		}
-		return true;
-	};
+	// $scope.sensitiveSearch = function (person) {
+	// 	if ($scope.search) {
+	// 		return person.name.indexOf($scope.search) == 0 ||
+	// 			person.email.indexOf($scope.search) == 0;
+	// 	}
+	// 	return true;
+	// };
+
+	$scope.$watch('search', function (newValue, oldValue) {
+		console.log("new value = " + newValue );
+		console.log("old value = " + oldValue );
+		$scope.contacts.doSearch(newValue);
+	});
+
+	$scope.$watch('order', function (oldValue, newValue) {
+
+
+		$scope.contacts.doOrder(newValue);
+	});
 
 });
 
@@ -51,6 +63,21 @@ app.service('ContactService', function (Contact) {
 		'hasMore': true,
 		'isLoading': false,
 		'page': 1,
+		'search': null,
+		'doSearch': function (search) {
+			self.hasMore = true;
+			self.page = 1;
+			self.persons = [];
+			self.search = search;
+			self.loadContacts();
+		},
+		'doOrder': function (order) {
+			self.hasMore = true;
+			self.page = 1;
+			self.persons = [];
+			self.ordering = order;
+			self.loadContacts();
+		},
 		'loadMore': function(){
 			if(self.hasMore && !self.isLoading){
 				self.page +=1;
@@ -60,8 +87,11 @@ app.service('ContactService', function (Contact) {
 		'loadContacts': function(){
 			if(self.hasMore && !self.isLoading){
 				self.isLoading = true;
+
 				var params = {
-					"page": self.page
+					"page": self.page,
+					"search": self.search,
+					"ordering": self.ordering
 				};
 
 				Contact.get(params, function (data) {
