@@ -1,4 +1,5 @@
-var app = angular.module('codecraft', ['ngResource', 'infinite-scroll', 'angularSpinner']);
+var app = angular.module('codecraft', ['ngResource',
+	'infinite-scroll', 'angularSpinner', 'angular-ladda', 'jcs-autoValidate']);
 
 
 
