@@ -5,6 +5,10 @@ var app = angular.module('codecraft', ['ngResource',
 
 app.controller('PersonDetailController', function ($scope, ContactService) {
 	$scope.contacts = ContactService;
+
+	$scope.updateContact = function(){
+		$scope.contacts.updateContact($scope.contacts.selectedPerson);
+	}
 });
 
 app.controller('PersonListController', function ($scope, ContactService) {
@@ -16,7 +20,7 @@ app.controller('PersonListController', function ($scope, ContactService) {
 	
 	$scope.loadMore = function () {
 		console.log("load more!");
-		$scope.contacts.loadMore();
+		$scope.contacts.loadMore($scope.contacts.selectedPerson);
 	}
 
 	// $scope.sensitiveSearch = function (person) {
@@ -41,15 +45,22 @@ app.controller('PersonListController', function ($scope, ContactService) {
 
 });
 
-app.config(function($httpProvider, $resourceProvider){
+app.config(function($httpProvider, $resourceProvider, laddaProvider){
 	var codeCraftAPIToken = 'Token 207e43c143c055265a4c21218d707dc768f2319f';
 	$httpProvider.defaults.headers.common['Authorization'] = codeCraftAPIToken;
 	$resourceProvider.defaults.stripTrailingSlashes = false;
+	laddaProvider.setOption({
+		style: 'expand-right'
+	});
 });
 
 
 app.factory("Contact", function ($resource) {
-	return $resource("https://codecraftpro.com/api/samples/v1/contact/:id");
+	return $resource("https://codecraftpro.com/api/samples/v1/contact/:id/", {id: '@id'}, {
+		update: {
+			method: 'PUT'
+		}
+	});
 });
 
 app.service('ContactService', function (Contact) {
@@ -63,8 +74,17 @@ app.service('ContactService', function (Contact) {
 		'persons': [],
 		'hasMore': true,
 		'isLoading': false,
+		'isUpdating': false,
 		'page': 1,
 		'search': null,
+		'updateContact': function (person) {
+			console.log("saving changes");
+			self.isUpdating = true;
+			//internal resource
+			person.$update().then(function () {
+				self.isUpdating = false;
+			});
+		},
 		'doSearch': function (search) {
 			self.hasMore = true;
 			self.page = 1;
