@@ -100,24 +100,7 @@
 			<div class="panel panel-default" >
 				<div class="panel-heading" >Details</div >
 				<div class="panel-body" >
-
-					<dl >
-						<dt >Name</dt >
-						<dd >{{contacts.selectedPerson.name}}</dd >
-						<dt >Email</dt >
-						<dd >{{contacts.selectedPerson.email}}</dd >
-						<dt >Birthday</dt >
-						<dd >{{contacts.selectedPerson.birthdate | date:"longDate"}}</dd >
-						<dt >Phonenumber</dt >
-						<dd >{{contacts.selectedPerson.phonenumber}}</dd >
-						<dt >Address</dt >
-						<dd >{{contacts.selectedPerson.address}}</dd >
-						<dt >City</dt >
-						<dd >{{contacts.selectedPerson.city}}</dd >
-						<dt >Country</dt >
-						<dd >{{contacts.selectedPerson.country}}</dd >
-					</dl >
-
+					<ng-include src="'template/form.html'"></ng-include>
 				</div >
 			</div >
 		</div >
