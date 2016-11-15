@@ -8,6 +8,8 @@
 	<link href="main.css"
 	      rel="stylesheet" >
 	<link rel="stylesheet" href="../libs/ladda/dist/ladda-themeless.min.css">
+	<link rel="stylesheet" href="../libs/bootstrap-additions/dist/bootstrap-additions.min.css">
+	<link rel="stylesheet" href="../libs/angularjs-toaster/toaster.min.css">
 </head >
 
 <body >
@@ -22,7 +24,7 @@
 </nav >
 
 <div class="container main-content" >
-
+	<toaster-container ></toaster-container>
 	<div class="row">
 		<div class="col-md-8"  ng-controller="PersonListController">
 			<div class="row" >
@@ -50,7 +52,8 @@
 								<option value="-email" >Email (DEC)</option >
 							</select >
 						</div >
-
+						<button class="btn btn-success pull-right"
+						ng-click="showModalCreateContact()">New</button>
 					</form >
 
 					<table class="table table-bordered" infinite-scroll="loadMore()" infinite-scroll-distance="1" >
@@ -77,7 +80,7 @@
 							 'background-color': person.email == contacts.selectedPerson.email ? 'lightgray' : ''
 						}"
 						    ng-click="contacts.selectedPerson = person" >
-							<td >{{ $index }}</td >
+							<td ><img class="img-circle profile-image" ng-src="{{person.photo}}" alt=""></td >
 							<td >{{ person.name }}</td >
 							<td >{{ person.email }}</td >
 							<td >{{ person.birthdate | date:"longDate" }}</td >
@@ -99,9 +102,17 @@
 		<div class="col-md-4"  ng-controller="PersonDetailController">
 
 			<div class="panel panel-default" >
-				<div class="panel-heading" >Details</div >
+				<div class="panel-heading" >Details
+					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteContact()"
+					ladda="contacts.isDeleting">Delete</button>
+					<div class="clearfix" ></div >
+
+				</div >
+
 				<div class="panel-body" >
-					<ng-include src="'template/form.html'"></ng-include>
+					<form class="form-horizontal" ng-submit="updateContact()" novalidate>
+						<ng-include src="'template/form.html'"></ng-include>
+					</form>
 				</div >
 			</div >
 		</div >
@@ -110,6 +121,7 @@
 
 
 <script src="../libs/angular/angular.min.js" ></script >
+<script src="../libs/angular-animate/angular-animate.min.js"></script>
 <script src="../libs/angular-resource/angular-resource.min.js"></script>
 <script src="../libs/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script>
 <script src="../libs/spin.js/spin.js"></script>
@@ -117,6 +129,10 @@
 <script src="../libs/angular-auto-validate/dist/jcs-auto-validate.min.js"></script>
 <script src="../libs/ladda/dist/ladda.min.js"></script>
 <script src="../libs/angular-ladda/dist/angular-ladda.min.js"></script>
+<script src="../libs/angular-strap/dist/angular-strap.min.js"></script>
+<script src="../libs/angular-strap/dist/angular-strap.tpl.min.js" ></script>
+<script src="../libs/angularjs-toaster/toaster.min.js"></script>
+
 <script src="main.js" ></script >
 </body >
 </html >
