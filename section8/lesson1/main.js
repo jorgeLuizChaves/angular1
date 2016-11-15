@@ -21,6 +21,11 @@ app.config(function($stateProvider, $urlRouterProvider){
 			url:"/edit/:email",
 			templateUrl: "templates/edit.html",
 			controller: "PersonDetailController"
+		})
+		.state("create", {
+			url:"/create",
+			templateUrl: "templates/edit.html",
+			controller: "PersonSaveController"
 		});
 	$urlRouterProvider.otherwise("/");
 });
@@ -61,7 +66,23 @@ app.factory("Contact", function ($resource) {
 	});
 });
 
+app.controller("PersonSaveController", function ($scope, $state, ContactService) {
+	$scope.mode = "create";
+	$scope.contacts = ContactService;
+
+	$scope.save = function () {
+		console.log("createContact");
+		$scope.contacts.createContact($scope.contacts.selectedPerson)
+			.then(function () {
+				$state.go("list");
+			})
+	};
+
+});
+
 app.controller('PersonDetailController', function ($scope, $state, ContactService, $stateParams) {
+	$scope.mode = "udpate";
+
 	console.log($stateParams);
 	$scope.contacts = ContactService;
 	$scope.contacts.selectedPerson = $scope.contacts.getPerson($stateParams.email);
