@@ -13,19 +13,36 @@ var app = angular.module('codecraft', [
 app.config(function($stateProvider, $urlRouterProvider){
 	$stateProvider
 		.state("list", {
+			views:{
+				main:{
+					templateUrl:"templates/list.html",
+					controller: 'PersonListController'
+				},
+				search:{
+					templateUrl:"templates/formsearch.html",
+					controller: 'PersonListController'
+				}
+			},
 			url:"/",
-			templateUrl:"templates/list.html",
-			controller: 'PersonListController'
+
 		})
 		.state("edit", {
 			url:"/edit/:email",
-			templateUrl: "templates/edit.html",
-			controller: "PersonDetailController"
+			views:{
+				main:{
+					templateUrl:"templates/edit.html",
+					controller: 'PersonDetailController'
+				}
+			}
 		})
 		.state("create", {
 			url:"/create",
-			templateUrl: "templates/edit.html",
-			controller: "PersonSaveController"
+			views:{
+				main:{
+					templateUrl:"templates/edit.html",
+					controller: 'PersonSaveController'
+				}
+			}
 		});
 	$urlRouterProvider.otherwise("/");
 });
