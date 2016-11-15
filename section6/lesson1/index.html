@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="../libs/ladda/dist/ladda-themeless.min.css">
 	<link rel="stylesheet" href="../libs/bootstrap-additions/dist/bootstrap-additions.min.css">
 	<link rel="stylesheet" href="../libs/angularjs-toaster/toaster.min.css">
+	<link rel="stylesheet" href="../libs/font-awesome/css/font-awesome.min.css">
 </head >
 
 <body >
@@ -30,7 +31,7 @@
 			<div class="row" >
 				<div class="col-md-12" >
 					<form class="form-inline well well-sm" >
-						<span class="glyphicon glyphicon-search" ></span >
+						<span class="fa fa-search" ></span >
 
 						<div class="form-group" >
 							<input type="text"
@@ -41,7 +42,7 @@
 									/>
 						</div >
 
-						<span class="glyphicon glyphicon-sort-by-attributes" ></span >
+						<span class="fa fa-sort" ></span >
 
 						<div class="form-group" >
 							<select class="form-control"
@@ -59,20 +60,26 @@
 					<table class="table table-bordered" infinite-scroll="loadMore()" infinite-scroll-distance="1" >
 
 						<tr >
-							<th >#</th >
-							<th >Name
-								<span ng-click="order = 'name'"
-								      class="glyphicon glyphicon-menu-up" ></span >
-								<span ng-click="order = '-name'"
-								      class="glyphicon glyphicon-menu-down" ></span >
+							<th class="col-1">#</th >
+							<th class="col-2">Name
+								<div class="sortables">
+									<span ng-click="order = 'name'"
+										  class="fa fa-sort-up" ></span >
+									<span ng-click="order = '-name'"
+										  class="fa fa-sort-down" style="float: left"></span >
+								</div>
+
 							</th >
-							<th >Email
-								<span ng-click="order = 'email'"
-								      class="glyphicon glyphicon-menu-up" ></span >
-								<span ng-click="order = '-email'"
-								      class="glyphicon glyphicon-menu-down" ></span >
+							<th class="col-3">Email
+								<div class="sortables">
+												<span ng-click="order = 'email'"
+													  class="fa fa-sort-up" ></span >
+									<span ng-click="order = '-email'"
+										  class="fa fa-sort-down" ></span >
+								</div>
+
 							</th >
-							<th >Birthday</th >
+							<th class="col-4">Birthday</th >
 						</tr >
 
 						<tr ng-repeat="person in contacts.persons"
